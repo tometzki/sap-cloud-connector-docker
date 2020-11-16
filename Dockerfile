@@ -3,8 +3,8 @@ FROM centos:7
 ################################################################
 # General information
 ################################################################
-LABEL com.nabisoft.sapcc.version="2.12.4"
-LABEL com.nabisoft.sapcc.sapjvm.version="8.1.065"
+LABEL com.nabisoft.sapcc.version="2.12.5"
+LABEL com.nabisoft.sapcc.sapjvm.version="8.1.066"
 
 ################################################################
 # Upgrade + install dependencies
@@ -30,19 +30,19 @@ WORKDIR /tmp/sapdownloads
 # ATTENTION:
 # This automated download automatically accepts SAP's End User License Agreement (EULA).
 # Thus, when using this docker file as is you automatically accept SAP's EULA!
-RUN wget --no-check-certificate --no-cookies --header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt; path=/;" -S https://tools.hana.ondemand.com/additional/sapcc-2.12.4-linux-x64.zip && \
-    wget --no-check-certificate --no-cookies --header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt; path=/;" -S https://tools.hana.ondemand.com/additional/sapjvm-8.1.065-linux-x64.rpm && \
-    unzip sapcc-2.12.4-linux-x64.zip && \
-    rpm -i sapjvm-8.1.065-linux-x64.rpm && \
-	rpm -i com.sap.scc-ui-2.12.4-4.x86_64.rpm
+RUN wget --no-check-certificate --no-cookies --header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt; path=/;" -S https://tools.hana.ondemand.com/additional/sapcc-2.12.5-linux-x64.zip && \
+    wget --no-check-certificate --no-cookies --header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt; path=/;" -S  https://tools.hana.ondemand.com/additional/sapjvm-8.1.066-linux-x64.rpm && \
+    unzip sapcc-2.12.5-linux-x64.zip && \
+    rpm -i sapjvm-8.1.066-linux-x64.rpm && \
+	rpm -i com.sap.scc-ui-2.12.5-4.x86_64.rpm
 
 # You could also use Oracle JDK (feel free to skip JCE download + installation)
-#RUN wget --no-check-certificate --no-cookies --header "Cookie: gpw_e24=http%3a%2F%2Fwww.oracle.com%2Ftechnetwork%2Fjava%2Fjavase%2Fdownloads%2Fjdk8-downloads-2133151.html; oraclelicense=accept-securebackup-cookie;" -S "https://download.oracle.com/otn-pub/java/jdk/8u202-b08/1961070e4c9b4e26a04e7f5a083f551e/jdk-8u202-linux-x64.rpm" && \
+# RUN wget --no-check-certificate --no-cookies --header "Cookie: gpw_e24=http%3a%2F%2Fwww.oracle.com%2Ftechnetwork%2Fjava%2Fjavase%2Fdownloads%2Fjdk8-downloads-2133151.html; oraclelicense=accept-securebackup-cookie;" -S "https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn/java/jdk/8u271-b09/61ae65e088624f5aaa0b1d2d801acb16/jdk-8u271-linux-x64.rpm" && \
 #    wget --no-check-certificate --no-cookies --header "Cookie: gpw_e24=http%3a%2F%2Fwww.oracle.com%2Ftechnetwork%2Fjava%2Fjavase%2Fdownloads%2Fjdk8-downloads-2133151.html; oraclelicense=accept-securebackup-cookie;" -S "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip" && \
-#    rpm -i jdk-8u202-linux-x64.rpm && \
+#    rpm -i jdk-8u271-linux-x64.rpm && \
 #    unzip jce_policy-8.zip && rm jce_policy-8.zip && cp -v UnlimitedJCEPolicyJDK8/*.jar /usr/java/default/jre/lib/security/ && \
-#    wget --no-check-certificate --no-cookies --header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt; path=/;" -S https://tools.hana.ondemand.com/additional/sapcc-2.12.1.1-linux-x64.zip && \
-#    unzip sapcc-2.12.1.1-linux-x64.zip && rpm -i com.sap.scc-ui-2.12.1-5.x86_64.rpm
+ #   wget --no-check-certificate --no-cookies --header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt; path=/;" -S https://tools.hana.ondemand.com/additional/sapcc-2.12.5-linux-x64.zip && \
+#    unzip sapcc-2.12.5-linux-x64.zip && rpm -i com.sap.scc-ui-2.12.5-4.x86_64.rpm
 
 
 # HINT:
@@ -84,6 +84,7 @@ CMD /opt/sapjvm_8/bin/java \
   -XtraceFile=log/vm_@PID_trace.log \
   -XX:+GCHistory \
   -XX:GCHistoryFilename=log/vm_@PID_gc.prf \
+	-Djdk.tls.server.protocols=TLSv1.2 \
   -XX:+HeapDumpOnOutOfMemoryError \
   -XX:+DisableExplicitGC \
   -Xms1024m \
