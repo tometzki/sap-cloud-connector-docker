@@ -34,7 +34,7 @@ The Dockerfile is based on [https://github.com/PaxSchweiz/SAPHCPConnector/blob/m
     - Without Proxy
 
         ```sh
-        docker build -t sapcc:2.12.4 .
+        docker build -t sapcc:2.12.5 .
         ```
 
     - Behind a Proxy
@@ -50,13 +50,13 @@ The Dockerfile is based on [https://github.com/PaxSchweiz/SAPHCPConnector/blob/m
     - Use this if you want to map the default SAP ports as they come on localhost (preferred)
 
         ```sh
-        docker run -p 8443:8443 -h mysapcc --name sapcc -d sapcc:2.12.4
+        docker run -p 8443:8443 -h mysapcc --name sapcc -d sapcc:2.12.5
         ```
 
     - Use this one if "random" ports on localhost are fine for you
 
         ```sh
-        docker run -P -h mysapcc --name sapcc -d sapcc:2.12.4
+        docker run -P -h mysapcc --name sapcc -d sapcc:2.12.5
         ```
 
 1. Starting/Stopping the container
